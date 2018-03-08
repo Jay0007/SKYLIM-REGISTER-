@@ -23,13 +23,13 @@
                         <v-stepper-items>
                             <v-container>
                             <v-stepper-content step="1">
-                                <one :complete="e1" @form1validity="btnStateChange"></one>
-                                <v-btn :disabled="canContinue" type="submit" color="primary"  @click.native="e1 = 2,submit" @click="one1">Continue</v-btn>                        
+                                <one :complete="e1" @form1validity="setE"></one>
+                                <!-- <v-btn type="submit" color="primary"  @click.native="e1 = 2,submit" @click="">Continue</v-btn>                         -->
                             </v-stepper-content>
                             <v-stepper-content step="2">
                                 <v-flex>EDUCATIONAL BACKGROUND</v-flex>
-                                <two></two>
-                                <v-btn :disabled="errors.any()" type="submit" color="primary" @click.native="e1 = 3" @click="one2">Continue</v-btn>                        
+                                <two :complete="e1" @form1validity="setE"></two>
+                                <!-- <v-btn :disabled="errors.any()" type="submit" color="primary" @click.native="e1 = 3" @click="one2">Continue</v-btn>                         -->
                                 <v-btn color="primary" @click.native="e1 = 1">Go Back</v-btn>                        
                             
                             </v-stepper-content>
@@ -60,8 +60,7 @@ import three from './steps/three.vue'
 export default {
   data () {
     return {
-        e1: 0,
-        canContinue:true,
+      e1: 0,
         combine:[]
     }
   },
@@ -87,9 +86,15 @@ export default {
       submit () {
         this.$validator.validateAll()
       },
-      btnStateChange(event){
-          console.log(event);
-          this.canContinue = event;
+      setE(val){
+          console.log(val);
+          this.e1=parseInt(val);
+      },
+      incrementE(){
+          this.e1++;
+      },
+      decrementE(){
+          this.e1--;
       }
   },
   components:{navbar,one,two,three}
